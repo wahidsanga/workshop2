@@ -1,18 +1,19 @@
-def count_words(file_path):
-    try:
-        with open(file_path, 'r', encoding='ISO-8859-1') as file:
-            content = file.read()
-            word_count = len(content.split())
-            return word_count
-    except FileNotFoundError:
-        print("File not found.")
-        return -1
-    except Exception as e:
-        print("Error occurred:", e)
-        return -1
+#!/usr/bin/python3
 
-file_path = "Phillip.txt"
-word_count = count_words(file_path)
+import sys
+import string
 
-if word_count >= 0:
-    print("Number of words in the file:", word_count)
+words = sys.stdin.read().split()
+d = dict()
+for word in words:
+	t = word.translate(str.maketrans('','',string.punctuation)).upper()
+	if(len(t) > 0):
+		d[t] = d.get(t,0) + 1
+
+l = list()
+for key,value in d.items():
+	l.append((value,key))
+	
+l = sorted(l, reverse=True)
+for v,k in l:
+	print(k,v)
